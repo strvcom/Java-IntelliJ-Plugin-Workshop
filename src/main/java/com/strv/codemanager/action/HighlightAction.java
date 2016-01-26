@@ -13,5 +13,14 @@ public class HighlightAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
 
+        Editor editor = anActionEvent.getData(LangDataKeys.EDITOR);
+        Project project = anActionEvent.getProject();
+        if (editor == null || project == null)
+            return;
+
+        if (editor.getMarkupModel().getAllHighlighters().length > 0)
+            UIManager.clearAllHighlights(editor);
+        else
+            UIManager.highlightAllMethods(editor, project);
     }
 }

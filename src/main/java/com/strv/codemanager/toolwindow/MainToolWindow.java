@@ -43,5 +43,16 @@ public class MainToolWindow extends JFrame implements ToolWindowFactory, FileEdi
 
     private void editorSelectionChanged(Project project, ToolWindow toolWindow) {
 
+        JPanel panel = UIManager.initUI(toolWindow);
+
+        List<ClassEntity> classList = ProjectManager.getClassEntityList(project);
+
+        for (ClassEntity entity : classList) {
+            UIManager.addClassLabel(panel, entity.getName());
+
+            for (String method : entity.getMethodList()) {
+                UIManager.addMethodLabel(panel, method);
+            }
+        }
     }
 }
