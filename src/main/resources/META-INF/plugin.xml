@@ -1,0 +1,46 @@
+<idea-plugin version="2">
+    <id>com.strv.codemanager</id>
+    <name>CodeManager</name>
+    <version>1.0</version>
+    <vendor email="lukas.hermann@strv.com" url="http://www.strv.com">STRV</vendor>
+
+    <description><![CDATA[
+      This plugin was created as an example used at STRV Android meetup 2016.
+    ]]></description>
+
+    <change-notes><![CDATA[
+      Version 1.0 - no changes
+    ]]>
+    </change-notes>
+
+
+    <!-- please see http://www.jetbrains.org/intellijry/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+
+    <!--Here you can register toolwindows.-->
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Methods list" secondary="false" icon="/drawable/icon.png" anchor="right"
+                    factoryClass="com.strv.codemanager.toolwindow.MainToolWindow"/>
+    </extensions>
+
+
+    <!--Here you can register actions in menu and toolbar-->
+    <actions>
+        <!--Action displayed as menu item-->
+        <group id="com.strv.codemanager.action.createMenu" text="Code Manager" description="Code Manager Menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="com.strv.codemanager.action.CreateEntityAction"
+                    class="com.strv.codemanager.action.CreateEntityAction"
+                    text="Create Entity" description="Create new entity in selected folder"/>
+        </group>
+
+        <!--Action displayed as toolbar item-->
+        <group id="com.strv.codemanager.action.higlightMenu" icon="/drawable/icon.png">
+            <add-to-group group-id="MainToolBar" anchor="last"/>
+            <action id="com.strv.codemanager.action.HighlightAction" class="com.strv.codemanager.action.HighlightAction"
+                    text="Highlight methods" description="Highlight all methods in currently opened file"
+                    icon="/drawable/icon.png"/>
+        </group>
+    </actions>
+</idea-plugin>

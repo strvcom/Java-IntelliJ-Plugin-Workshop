@@ -1,0 +1,29 @@
+// Main build script for CodeManager
+//
+// Usage: gradlew prepareSandbox    - creates proper structure of plugin and fills sandbox directory with it
+//        gradlew buildPlugin       - assembles plugin and prepares zip archive for deployment
+//        gradlew runIdea           - executes IntelliJ IDEA instance with installed the plugin you're developing
+//        gradlew publishPlugin     - uploads plugin distribution archive to http://plugins.jetbrains.com
+//        gradlew runPlugin         - build and execute currently developing plugin
+
+plugins {
+    id "org.jetbrains.intellij" version "0.0.39"
+}
+
+intellij {
+    version 'IC-15.0.3'
+    pluginName 'CodeManager-release'
+}
+
+apply plugin: 'idea'
+idea {
+    module.iml.withXml {
+        def atts = it.asNode().component.content.sourceFolder
+                .find { it.@url == 'file://$MODULE_DIR$/src/main/resources' }
+                .attributes()
+        atts.remove('isTestSource')
+        atts.put('type', 'java-resource')
+    }
+}
+
+task runPlugin(dependsOn: ['prepareSandbox', 'runIdea'])
