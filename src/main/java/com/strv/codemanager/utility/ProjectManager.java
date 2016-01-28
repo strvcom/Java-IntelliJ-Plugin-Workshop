@@ -28,7 +28,7 @@ public class ProjectManager {
         PsiFile psiFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
         if (psiFile instanceof PsiJavaFile) {
             PsiClass[] psiClasses = ((PsiJavaFile) psiFile).getClasses();
-            analyzeClasses(classList, psiClasses);
+            analyzeClasses(classList, psiClasses, 1);
         }
         return classList;
     }
@@ -64,7 +64,7 @@ public class ProjectManager {
     }
 
 
-    private static void analyzeClasses(List<ClassEntity> classList, PsiClass[] psiClasses) {
+    private static void analyzeClasses(List<ClassEntity> classList, PsiClass[] psiClasses, int counter) {
         for (PsiClass psiClas : psiClasses) {
             ClassEntity entity = new ClassEntity(psiClas.getName());
             for (PsiMethod method : psiClas.getMethods()) {
@@ -72,8 +72,8 @@ public class ProjectManager {
             }
             classList.add(entity);
 
-            if (psiClas.getAllInnerClasses().length != 0)
-                analyzeClasses(classList, psiClas.getAllInnerClasses());
+            if (psiClas.getAllInnerClasses().length != 0 && counter > 0)
+                analyzeClasses(classList, psiClas.getAllInnerClasses(), --counter);
         }
     }
 
